@@ -1,0 +1,74 @@
+.pointer{
+    cursor: pointer;
+}
+
+main{
+    min-height: 100vh;
+    background: #c8c8c8;
+}
+
+.bg-mylight{
+    background: rgb(230, 230, 230);
+}
+
+.myshadow{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.ml-0{
+    margin-left: 0 !important;
+}
+
+.me-3{
+    margin-right: 1.5vh !important;
+}
+
+.ms-3{
+    margin-left: 1.5vh !important;
+}
+
+
+// Predefined styles and classes 
+
+
+
+//  Managing scheduler col, cells height
+.col-9{
+    margin-left: auto;
+    margin-right: auto;
+    height: 90vh !important;
+    overflow-y: auto;
+}
+
+.hour-cells-div{
+    height: 150px;
+}
+
+
+.arrows{
+    top: 0;
+    left: 50%;
+}
+
+
+
+// Giving nice border to every day-hour-cell
+
+.day-div .cells:nth-child(2){
+    border-top: 1px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+
+.cells{
+    border-left: 1px solid rgba(0, 0, 0, 0.3) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3)!important;
+}
+
+.cells-col:nth-child(9){
+
+    .cells{
+        border-right: 1px solid rgba(0, 0, 0, 0.3) !important;
+    }
+}
+
+// 

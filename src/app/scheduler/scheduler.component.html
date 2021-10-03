@@ -1,0 +1,81 @@
+<main class=" position-relative">
+    <div class="row m-0 pt-5 d-flex justify-content-between">
+        <div class="col-2 p-0 ms-3">
+            <app-datepicker></app-datepicker>
+        </div>
+       
+
+        <div class="col-9 p-3 shadow bg-light m-0 me-3">
+            <div class="row px-4">
+                
+               <div class="col-12 d-flex justify-content-end">
+                    <div class="d-flex">
+                        <div class="p-2">
+                            <span class="mx-2 pointer" (click)="previousWeek()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                </svg>
+                            </span>
+
+                            <span class="mx-2 pointer" (click)="nextWeek()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+               </div>
+
+                <div class="col-1 px-1">
+                    <div>
+                        <p class="text-light">-</p>
+                    </div>
+                    <div *ngFor = "let hour of hours" class="hour-cells-div m-1 d-flex justify-content-center">
+                        <h4>{{ hour }}</h4>
+                    </div>
+                </div>
+
+                <div class="col cells-col p-0" *ngFor="let day of weekdays">
+                    <div class="day-div">
+
+                        <h4 class="">{{ day.dayFormat }}</h4>
+                        <div *ngFor = "let hour of hours" class="hour-cells-div cells myshadow bg-light ml-0">
+                            <div class="w-100 h-100 "
+                                *ngFor="let node of nodeDate | letsFixSomeThings:day.monthDayFormat:hour">
+                                <div
+                                    [ngClass]="{
+                                        'bg-primary text-light': node
+                                    }"
+                                    (click)="open(content, node)" class="pointer h-100">
+                                    <div *ngIf="node">
+                                        <h4 class="p-2">VIEWING</h4>
+                                    </div>
+                                        
+                                        <ng-template #content let-modal>
+                
+                                                <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button> -->
+
+                                            <div class="modal-body">
+                                                {{ node.date }}
+                                            </div>
+                                        </ng-template>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</main>
+
+
+
+
