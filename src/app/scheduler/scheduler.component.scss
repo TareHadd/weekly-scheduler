@@ -27,6 +27,14 @@ main{
     margin-left: 1.5vh !important;
 }
 
+.fs-1{
+    font-size: 2vh;
+}
+
+.fs-2{
+    font-size: 3.5vh;
+}
+
 
 // Predefined styles and classes 
 
@@ -74,9 +82,14 @@ main{
 // 
 
 
-// 
+// Scrollbar editing
 
 ::-webkit-scrollbar {
     width: 4px;
     background: rgb(255, 255, 255);
 }
+
+//  Editing modal 
+
+
+
