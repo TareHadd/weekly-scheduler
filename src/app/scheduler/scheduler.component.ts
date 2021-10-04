@@ -11,21 +11,27 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap'
 })
 export class SchedulerComponent implements OnInit {
   
-  date = new Date();
+   date = new Date();
   startOfWeek!: any;
   endOfWeek!: any;
   weekdaysFormated: any[] = [];
   hours:any[] = []
+  // Starting point
 
   weekdays: any[] = [];
-  data = []
 
   nodeDate: Node[] = []
+
+  // datepicker day
+  datepickerDate!:any
   
   constructor(
     private service: AppointmentsService,
-    private modalService: NgbModal){}
+    private modalService: NgbModal){
 
+    }
+
+  
   ngOnInit(): void {
 
     
@@ -37,9 +43,10 @@ export class SchedulerComponent implements OnInit {
     
   }
 
-  showWeek() {
-    this.startOfWeek = startOfWeek(this.date);
-    this.endOfWeek = endOfWeek(this.date);
+  // Using date-fns functions for getting only week
+  showWeek(date) {
+    this.startOfWeek = startOfWeek(date);
+    this.endOfWeek = endOfWeek(date);
     this.weekdays = eachDayOfInterval({
       start: this.startOfWeek,
       end: this.endOfWeek,
@@ -51,6 +58,7 @@ export class SchedulerComponent implements OnInit {
   }
 
 
+  // Function for getting hours from 8:00 to 20:00
   getHours(){
     let hour!:any
     for(let i = 8; i <= 20; i++){
@@ -65,27 +73,56 @@ export class SchedulerComponent implements OnInit {
   }
 
 
+  // Function for getting next and previous week
   nextWeek() {
     this.date = addDays(this.date, 7);
-    this.showWeek();
+    this.showWeek(this.date);
     console.log(this.startOfWeek, this.endOfWeek);
   }
 
   previousWeek() {
     this.date = subDays(this.date, 7);
-    this.showWeek();
+    this.showWeek(this.date);
     console.log(this.startOfWeek, this.endOfWeek);
   }
 
+
+  // pushing content from json servere and later showing appointments,
   formatApp(content: any[]){
     for(let a of content){
       this.nodeDate.push(a)
     }
-    this.showWeek();
+    this.showWeek(this.date); //call because we have putted format app in init
     this.getHours();
   }
 
-  open(content, node) {
-    this.modalService.open(content, node)
+  // modal open f
+  openModal(content) {
+    this.modalService.open(content, { centered: true })
+  }
+
+  // get day from datepicker
+
+  getDay(date){
+    console.log(date)
+    let year = date.year;
+    let month = date.month
+    let day = date.day
+    let newDate = new Date(date.year, date.month-1, date.day)
+    
+    console.log(year)
+    console.log(month)
+    console.log(day)
+    console.log('____________________ date from datepicker:')
+    console.log(newDate)
+    console.log('____________________ start of week:')
+    console.log(startOfWeek(newDate))
+    console.log('____________________ end of week:')
+    console.log(endOfWeek(newDate))
+    console.log('____________________')
+    console.log(startOfWeek(this.date))
+
+    this.showWeek(newDate)
+    
   }
 }
