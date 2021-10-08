@@ -12,7 +12,9 @@ import { DatepickerComponent } from './scheduler/datepicker/datepicker.component
 
 import { FormsModule } from '@angular/forms';
 import { DateTimePipe } from './pipe/dateTimePipe';
-import { AppointmentModalComponent } from './scheduler/appointment-modal/appointment-modal.component'
+import { SchedulerV2Component } from './scheduler-v2/scheduler-v2.component';
+import { DatepickerV2Component } from './scheduler-v2/datepicker-v2/datepicker-v2.component';
+import { NextViewingComponent } from './scheduler-v2/next-viewing/next-viewing.component';
 
 
 
@@ -22,7 +24,9 @@ import { AppointmentModalComponent } from './scheduler/appointment-modal/appoint
     SchedulerComponent,
     DatepickerComponent,
     DateTimePipe,
-    AppointmentModalComponent
+    SchedulerV2Component,
+    DatepickerV2Component,
+    NextViewingComponent,
   ],
   imports: [
     BrowserModule,

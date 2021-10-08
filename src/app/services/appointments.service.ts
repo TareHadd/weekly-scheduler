@@ -12,10 +12,15 @@ export class AppointmentsService {
   constructor(private http: HttpClient) { }
 
   getData(){
-    return this.http.get<Data>('../../assets/data.json').pipe(
+    return this.http.get<any>('../../assets/data.json').pipe(
       map(
         res => {
-          return res.data.appointments.nodes
+           let node = res.data.appointments.nodes.sort(function (a, b) {
+            var dateA = new Date(a.date).valueOf(), dateB = new Date(b.date).valueOf()
+            return dateA - dateB
+          });
+          //  console.log(node)
+           return node
          }
       )
     )

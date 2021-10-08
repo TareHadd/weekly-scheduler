@@ -41,21 +41,21 @@
                     <div class="day-div">
 
                         <h4 class="">{{ day.dayFormat }}</h4>
-                        <div *ngFor = "let hour of hours" class="hour-cells-div cells myshadow bg-light ml-0">
+                        <div *ngFor="let hour of hours" class="hour-cells-div cells myshadow bg-light ml-0">
                             <div class="w-100 h-100 "
-                                *ngFor="let node of nodeDate | letsFixSomeThings:day.monthDayFormat:hour">
+                                *ngFor="let node of nodeDate | letsFix:day.monthDayFormat:hour">
                                 <div
                                     [ngClass]="{
                                         'bg-primary text-light': node
                                     }"
-                                    (click)="openModal(content)" class="pointer h-100">
+                                     class="pointer h-100"> <!-- (click)="openModal(content)" -->
                                     <div *ngIf="node">
                                         <h4 class="p-2">VIEWING</h4>
                                     </div>
                                         
-                                    <div class="modal-div">
+                                    <!-- <div class="modal-div">
                                         <ng-template #content let-modal>
-                                            <div class="modal-body" >
+                                            <div class="modal-body">
 
                                                 <div class="d-flex py-3">
                                                     <div class="mx-2">
@@ -91,7 +91,7 @@
 
                                                         <div>
                                                             <h4 class="fs-1 roboto">
-                                                                <strong>{{ node.property.user.profile.firstname + ' ' }}</strong>
+                                                                <strong>{{ node.property.user.profile.firstName + ' ' }}</strong>
                                                                 <strong>{{ node.property.user.profile.name }}</strong>
                                                              </h4>
                                                              <h4 class="fs-1 roboto">
@@ -100,7 +100,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- *** -->
+                                                     *** 
                                                     <div class="d-flex justify-content-between border p-3">
 
                                                         <div class="d-flex align-items-center">
@@ -118,7 +118,7 @@
                                                                 </h4>
                                                             </div>
                                                         </div>
-                                                        <!-- * -->
+                                                        <!-- *
 
                                                         <div class="d-flex px-2">
 
@@ -137,7 +137,7 @@
 
                                                     </div>
 
-                                                    <!-- *** -->
+                                                    <!-- *** 
 
                                                     <div class="border p-2 mt-2 text-warning d-flex justify-content-center">
                                                         <h4 class="m-0">
@@ -152,7 +152,7 @@
                                             </div>
 
                                         </ng-template>
-                                    </div>
+                                    </div> -->
                                     
                                 </div>
                             </div>

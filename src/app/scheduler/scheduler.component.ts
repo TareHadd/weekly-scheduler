@@ -37,9 +37,12 @@ export class SchedulerComponent implements OnInit {
     
     this.service.getData().subscribe(
       res=>{
-        this.formatApp(res)
+        this.nodeDate = res
       }
     )
+
+    this.showWeek(this.date); //call because we have putted format app in init
+    this.getHours();
     
   }
 
@@ -87,15 +90,7 @@ export class SchedulerComponent implements OnInit {
   }
 
 
-  // pushing content from json servere and later showing appointments,
-  formatApp(content: any[]){
-    for(let a of content){
-      this.nodeDate.push(a)
-    }
-    this.showWeek(this.date); //call because we have putted format app in init
-    this.getHours();
-  }
-
+ 
   // modal open f
   openModal(content) {
     this.modalService.open(content, { centered: true })
@@ -104,25 +99,26 @@ export class SchedulerComponent implements OnInit {
   // get day from datepicker
 
   getDay(date){
-    console.log(date)
+    // console.log(date)
     let year = date.year;
     let month = date.month
     let day = date.day
     let newDate = new Date(date.year, date.month-1, date.day)
     
-    console.log(year)
-    console.log(month)
-    console.log(day)
-    console.log('____________________ date from datepicker:')
-    console.log(newDate)
-    console.log('____________________ start of week:')
-    console.log(startOfWeek(newDate))
-    console.log('____________________ end of week:')
-    console.log(endOfWeek(newDate))
-    console.log('____________________')
-    console.log(startOfWeek(this.date))
+    // console.log(year)
+    // console.log(month)
+    // console.log(day)
+    // console.log('____________________ date from datepicker:')
+    // console.log(newDate)
+    // console.log('____________________ start of week:')
+    // console.log(startOfWeek(newDate))
+    // console.log('____________________ end of week:')
+    // console.log(endOfWeek(newDate))
+    // console.log('____________________')
+    // console.log(startOfWeek(this.date))
 
     this.showWeek(newDate)
     
   }
+  
 }
