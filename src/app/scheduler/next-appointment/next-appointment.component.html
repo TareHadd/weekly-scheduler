@@ -1,0 +1,20 @@
+<div class="next text-light p-2">
+
+    <div style="border-bottom: 1px solid white;" class="py-2">
+        <h4 class="m-0">
+            <strong>UP NEXT</strong>
+        </h4>
+    </div>
+
+    <div class="p-2 next-app"  *ngFor="let next of nextAppointment">
+        <h4 class="text-light">
+            {{ next.property.name }}
+        </h4>
+        
+        <p>Date: {{ next.date | date:'dd. hh:mm'}}H</p>
+        <p>City: {{ next.property.address.city }}</p>
+        <p>Street: {{ next.property.address.street }}</p>
+        <p>User: {{ next.property.user.profile.name }}</p>
+    </div>
+
+</div>

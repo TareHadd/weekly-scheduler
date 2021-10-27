@@ -5,28 +5,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SchedulerComponent } from './scheduler/scheduler.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { DatepickerComponent } from './scheduler/datepicker/datepicker.component';
 
 import { FormsModule } from '@angular/forms';
-import { DateTimePipe } from './pipe/dateTimePipe';
-import { SchedulerV2Component } from './scheduler-v2/scheduler-v2.component';
-import { DatepickerV2Component } from './scheduler-v2/datepicker-v2/datepicker-v2.component';
-import { NextViewingComponent } from './scheduler-v2/next-viewing/next-viewing.component';
-
+import { SchedulerComponent } from './scheduler/scheduler.component';
+import { SideNavComponent } from './shared/side-nav/side-nav.component';
+import { CalendarComponent } from './shared/calendar/calendar.component';
+import { NextAppointmentComponent } from './scheduler/next-appointment/next-appointment.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SchedulerComponent,
-    DatepickerComponent,
-    DateTimePipe,
-    SchedulerV2Component,
-    DatepickerV2Component,
-    NextViewingComponent,
+    SideNavComponent,
+    CalendarComponent,
+    NextAppointmentComponent
   ],
   imports: [
     BrowserModule,
@@ -34,10 +27,6 @@ import { NextViewingComponent } from './scheduler-v2/next-viewing/next-viewing.c
     NgbModule,
     HttpClientModule,
     FormsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    })
   ],
   providers: [],
   bootstrap: [AppComponent]

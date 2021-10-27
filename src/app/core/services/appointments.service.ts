@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators'
-import { Data } from '../models/thedata';
-import { Observable } from 'rxjs';
+import { groupBy, map } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +17,29 @@ export class AppointmentsService {
             var dateA = new Date(a.date).valueOf(), dateB = new Date(b.date).valueOf()
             return dateA - dateB
           });
-          //  console.log(node)
-           return node
+
+           for(let n of node){
+             n.date = n.date.substring(0, 16);
+           }
+
+           let groupped = this.groupBy(node, 'date');
+           return groupped
          }
       )
     )
   }
+
+
+  
+  groupBy(arr, criteria) {
+    const newObj = arr.reduce(function (acc, currentValue) {
+      if (!acc[currentValue[criteria]]) {
+        acc[currentValue[criteria]] = [];
+      }
+      acc[currentValue[criteria]].push(currentValue);
+      return acc;
+    }, []);
+    return newObj;
+  }
+
 }

@@ -1,0 +1,17 @@
+<div class="side-nav text-light">
+    <!-- <div class=""
+      style="width: 2px; background-color: red; height: 100%; margin-left: auto;">
+    </div> -->
+
+    <div class="icon mt-4">
+        <i 
+        *ngIf="toggle"
+        (click)="onToggle()"
+        class="bi bi-calendar-fill"></i>
+
+        <i
+        *ngIf="!toggle"
+        (click)="onToggle()" 
+        class="bi bi-calendar"></i>
+    </div>
+</div>

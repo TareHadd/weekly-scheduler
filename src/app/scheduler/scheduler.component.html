@@ -1,173 +1,274 @@
-<main class=" position-relative">
-    <div class="row m-0 pt-5 d-flex justify-content-between">
-        <div class="col-2 p-0 ms-3">
-             <app-datepicker
-            (sendDay)="getDay($event)"
-            ></app-datepicker>
+<main class="position-relative">
+
+    <app-side-nav
+    (toggleCalendar)="toggleCalendarFunc($event)"
+    ></app-side-nav>
+
+    <nav class="row w-100 text-light m-0">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <h4>
+                <strong>MyScheduler</strong>
+            </h4>
         </div>
-       
 
-        <div class="col-9 p-3 shadow bg-light m-0 me-3">
-            <div class="row px-4">
-                
-               <div class="col-12 d-flex justify-content-end">
-                    <div class="d-flex">
-                        <div class="p-2">
-                            <span class="mx-2 pointer" (click)="previousWeek()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-                                </svg>
-                            </span>
+        <!-- <div class="w-100 mt-auto"
+          style="background: red; height: 2px; margin-left: 58px;">
+        </div> -->
+    </nav>
 
-                            <span class="mx-2 pointer" (click)="nextWeek()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                                </svg>
-                            </span>
+    <div
+    class="widgets"
+     [ngClass]="{'d-flex evenly': !toggleCalendar}">
+
+     
+        <div class="row m-0 mt-4 main-row"
+         [ngClass]="{'hide' : !toggleCalendar}"
+        >
+            <div class="col-10 bg-calendar shadow py-4 position-relative">
+
+                <div class="row w-100" style="height: 50px;"
+                [ngClass]="{'hide-content': !toggleCalendar}">
+
+                    <div class="col-12 d-flex justify-content-between">
+            
+                        <div class="d-flex align-items-center">
+            
+                            <h4>{{startOfWeek | date:'dd. M.'}}</h4>
+                            <h4 class="mx-1">-</h4>
+                            <h4>{{endOfWeek | date:'dd. M. YYYY.'}}</h4>
+            
                         </div>
+            
+                        <div class="d-flex">
+            
+                            <span (click)="previousWeek()" class="mx-5 pointer week">
+                                <i class="bi bi-caret-left fs-2" style="font-size: 35px;"></i>
+                            </span>
+            
+            
+                            <span (click)="nextWeek()" class="pointer week">
+                                <i class="bi bi-caret-right fs-2" style="font-size: 35px;"></i>
+                            </span>
+            
+                        
+                        </div>
+            
                     </div>
-               </div>
-
-                <div class="col-1 px-1">
-                    <div>
-                        <p class="text-light">-</p>
+            
+                </div>
+            
+                <div class="row w-100"
+                [ngClass]="{'hide-content': !toggleCalendar}">
+            
+                    <div class="col-1">
+                        
                     </div>
-                    <div *ngFor = "let hour of hours" class="hour-cells-div m-1 d-flex justify-content-center">
-                        <h4>{{ hour }}</h4>
+            
+                    <div class="col" *ngFor="let day of weekdays">
+                    <h4>
+                        <strong>
+                            {{ day | date:'dd.'}}
+                        </strong>
+                    </h4>
                     </div>
                 </div>
-
-                <div class="col cells-col p-0" *ngFor="let day of weekdays">
-                    <div class="day-div">
-
-                        <h4 class="">{{ day.dayFormat }}</h4>
-                        <div *ngFor="let hour of hours" class="hour-cells-div cells myshadow bg-light ml-0">
-                            <div class="w-100 h-100 "
-                                *ngFor="let node of nodeDate | letsFix:day.monthDayFormat:hour">
-                                <div
-                                    [ngClass]="{
-                                        'bg-primary text-light': node
-                                    }"
-                                     class="pointer h-100"> <!-- (click)="openModal(content)" -->
-                                    <div *ngIf="node">
-                                        <h4 class="p-2">VIEWING</h4>
+            
+                <div class="row w-100 h-100 calendar-row p-4"
+                [ngClass]="{'hide-content': !toggleCalendar}">
+            
+            
+            
+                    <div class="col-1" >
+            
+                        
+                        <div *ngFor="let hour of hours" class="cells cells-hour">
+                            <h4>
+                                <strong>
+                                    {{ hour }}
+                                </strong>
+                            </h4>
+                        </div>
+            
+                    </div>
+            
+                    <div class="col p-0" *ngFor="let day of weekdays">
+                        <div *ngFor="let hour of hours" class="cells border">
+                            
+                            <div 
+                                class="appointment"
+                                (click)="open(content, day, hour)"
+                                *ngIf="appointments[ day | date:'y-MM-dd' +'T'+hour]">
+                                <h4>
+                                    {{ appointments[ day | date:'y-MM-dd' +'T'+hour].length  }}
+                                    <span *ngIf="appointments[ day | date:'y-MM-dd' +'T'+hour].length > 1"></span>
+                                </h4>
+            
+                                <ng-template #content let-modal>
+            
+                                    <div class="d-flex justify-content-end">
+                                        <i 
+                                        *ngIf="!leftArrowStatus"
+                                        (click)="previousAppointments( day+hour )" 
+                                        class="bi bi-caret-left-fill fs-2 mx-5 pointer"
+                                        style="font-size: 35px;"></i>
+            
+                                        <i *ngIf="leftArrowStatus" 
+                                        class="bi bi-caret-left fs-2 mx-5 pointer"
+                                        style="font-size: 35px;"
+                                        ></i>
+            
+                                        <i  
+                                        *ngIf="!rightArrowStatus"
+                                        (click)="nextAppointments( day,hour )" 
+                                        class="bi bi-caret-right-fill fs-2 pointer"
+                                        style="font-size: 35px;"></i>
+            
+                                        <i *ngIf="rightArrowStatus" 
+                                        class="bi bi-caret-right fs-2 pointer"
+                                        style="font-size: 35px;"></i>
                                     </div>
+            
+                                <div *ngFor="let app of data">
+                                    <div class="modal-body">
+            
+            
+                                        <div class="d-flex flex-column py-3">
                                         
-                                    <!-- <div class="modal-div">
-                                        <ng-template #content let-modal>
-                                            <div class="modal-body">
-
-                                                <div class="d-flex py-3">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex">
                                                     <div class="mx-2">
                                                         <h4 class="fs-1 roboto">
                                                             <i class="text-primary bi bi-calendar-week px-2"></i>
-                                                            <strong>{{ node.date | date: 'EEEE, MMMM d, y' }}</strong>
+                                                            <strong>{{ app.date | date: 'EEEE, MMMM d, y' }}</strong>
                                                         </h4>
                                                     </div>
-
+            
                                                     <div class="mx-2">
                                                         <h4 class="fs-1 roboto">
                                                             <i class="text-primary bi bi-clock px-2"></i>
-                                                            <strong>{{ node.date | date:'HH:mm'}}</strong>
+                                                            <strong>{{ app.date | date:'HH:mm'}}</strong>
                                                         </h4>
                                                     </div>
                                                 </div>
-
-                                                <div class="p-3 bg-light border">
-
-                                                    <div class="d-flex justify-content-between pb-2">
-                                                        <div>
-                                                            <h4 class="fs-1 roboto">
-                                                                <strong>{{ node.property.name }}</strong>
-                                                             </h4>
-                                                             <h4 class="roboto fs-1">
-                                                                 {{ node.property.address.street }}
-                                                                 {{ node.property.address.houseNumber }}
-                                                                 {{ node.property.address.city }}
-                                                                 {{ node.property.address.country }}
-                                                                 {{ node.property.address.zipCode }}
-                                                             </h4>
-                                                        </div>
-
-                                                        <div>
-                                                            <h4 class="fs-1 roboto">
-                                                                <strong>{{ node.property.user.profile.firstName + ' ' }}</strong>
-                                                                <strong>{{ node.property.user.profile.name }}</strong>
-                                                             </h4>
-                                                             <h4 class="fs-1 roboto">
-                                                                {{ node.property.user.usertype }}
-                                                             </h4>
-                                                        </div>
-                                                    </div>
-
-                                                     *** 
-                                                    <div class="d-flex justify-content-between border p-3">
-
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="mx-2">
-                                                                <h4 class="fs-1 roboto m-0">
-                                                                    <i class="text-primary bi bi-calendar-week px-2"></i>
-                                                                    {{ node.date | date: 'EEEE, MMMM d, y' }}
-                                                                </h4>
-                                                            </div>
-
-                                                            <div class="mx-2">
-                                                                <h4 class="fs-1 roboto m-0">
-                                                                    <i class="text-primary bi bi-clock px-2"></i>
-                                                                    {{ node.date | date:'HH:mm'}}
-                                                                </h4>
-                                                            </div>
-                                                        </div>
-                                                        <!-- *
-
-                                                        <div class="d-flex px-2">
-
-                                                            <h4 class="m-0 fs-2 px-2">
-                                                                <i class="bi bi-person text-primary"></i>
-                                                            </h4>
-
-                                                            <h4 class="fs-1 roboto m-0 d-flex align-items-center">
-                                                                {{ node.attendeeCount }}
-                                                                |
-                                                                {{ node.maxInviteeCount}}
-                                                            </h4>
-
-
-                                                        </div>
-
-                                                    </div>
-
-                                                    <!-- *** 
-
-                                                    <div class="border p-2 mt-2 text-warning d-flex justify-content-center">
-                                                        <h4 class="m-0">
-                                                            <i class="bi bi-plus-circle px-2"></i>
-                                                            Create Viewing
-                                                        </h4>
-                                                    </div>
-
+            
+                                                <div>
+                                                    <h2 class="text-danger pointer trash">
+                                                        <i class="bi bi-trash"></i>
+                                                    </h2>
                                                 </div>
-
-
                                             </div>
-
-                                        </ng-template>
-                                    </div> -->
-                                    
+            
+                                            <div class="p-3 bg-light border">
+            
+                                                <div class="d-flex justify-content-between pb-2">
+                                                    <div>
+                                                        <h4 class="fs-1 roboto">
+                                                            <strong>{{ app.property.name }}</strong>
+                                                        </h4>
+                                                        <h4 class="roboto fs-1">
+                                                            {{ app.property.address.street }}
+                                                            {{ app.property.address.houseNumber }}
+                                                            {{ app.property.address.city }}
+                                                            {{ app.property.address.country }}
+                                                            {{ app.property.address.zipCode }}
+                                                        </h4>
+                                                    </div>
+            
+                                                    <div>
+                                                        <h4 class="fs-1 roboto">
+                                                            <strong>{{ app.property.user.profile.firstname + ' ' }}</strong>
+                                                            <strong>{{ app.property.user.profile.name }}</strong>
+                                                        </h4>
+                                                        <h4 class="fs-1 roboto">
+                                                            {{ app.property.user.usertype }}
+                                                        </h4>
+                                                    </div>
+                                                </div>
+            
+                                                <!-- *** -->
+                                                <div class="d-flex justify-content-between border p-3">
+            
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="mx-2">
+                                                            <h4 class="fs-1 roboto m-0">
+                                                                <i class="text-primary bi bi-calendar-week px-2"></i>
+                                                                {{ app.date | date: 'EEEE, MMMM d, y' }}
+                                                            </h4>
+                                                        </div>
+            
+                                                        <div class="mx-2">
+                                                            <h4 class="fs-1 roboto m-0">
+                                                                <i class="text-primary bi bi-clock px-2"></i>
+                                                                {{ app.date | date:'HH:mm'}}
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <!-- * -->
+            
+                                                    <div class="d-flex px-2">
+            
+                                                        <h4 class="m-0 fs-2 px-2">
+                                                            <i class="bi bi-person text-primary"></i>
+                                                        </h4>
+            
+                                                        <h4 class="fs-1 roboto m-0 d-flex align-items-center">
+                                                            {{ app.attendeeCount }}
+                                                            |
+                                                            {{ app.maxInviteeCount}}
+                                                        </h4>
+            
+            
+                                                    </div>
+            
+                                                </div>
+            
+                                                <!-- *** -->
+            
+                                            
+            
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
                                 </div>
+                                </ng-template>
                             </div>
+            
                         </div>
-                        
+            
                     </div>
-                    
+            
+            
                 </div>
+
+                <!-- Hide -->
+                <div
+                *ngIf="!toggleCalendar"
+                class="w-100 h-100 position-absolute" style="top:200px; left: 80px;">
+                    <h1 class="text-light">
+                        SCHEDULER
+                    </h1>
+                </div>
+
             </div>
         </div>
+
+        <div class="calendar mt-4"
+        [ngClass]="{'d-none': toggleCalendar}">
+            <app-calendar></app-calendar>
+        </div>
+
+        <div 
+        [ngClass]="{'d-none': toggleCalendar}"
+        class="mt-4 next-app">
+            <div *ngIf="nextStatus">
+                <app-next-appointment
+                    [appointments]="appointments"
+                ></app-next-appointment>
+            </div>
+        </div>
+
     </div>
 
-    
+
 </main>
-
-
-
-

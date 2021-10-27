@@ -8,9 +8,11 @@
 
 
 
+// DATEPICKER
+
 .ngb-dp-day, .ngb-dp-week-number, .ngb-dp-weekday{
-    width: 3rem !important;
-    height:  3rem !important;
+    width: 4rem !important;
+    height:  4rem !important;
 }
 
 .ngb-dp-week{
@@ -18,10 +20,48 @@
 }
 
 
+
+
+// MODAL
+
 .modal-dialog{
     width: 80% !important;
     max-width: unset !important;
     height: 100% !important;
+}
+
+
+// SCROLLBAR
+
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(59, 59, 59); 
+    border-radius: 4px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(80, 80, 80); 
+    border-radius: 1px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #6b6b6b; 
+}
+
+
+@media screen and(max-width: 600px) {
+    
+    .ngb-dp-day, .ngb-dp-week-number, .ngb-dp-weekday{
+        width: 2.5rem !important;
+        height:  2.5rem !important;
+    }
 }
 
 
